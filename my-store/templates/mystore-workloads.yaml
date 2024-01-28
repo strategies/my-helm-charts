@@ -1,0 +1,121 @@
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: mystore-webapp
+#spec:
+#  selector:
+#    matchLabels:
+#      app: mystore-webapp
+#  replicas: 1
+#  template: # Store front pod template
+#    metadata:
+#      labels:
+#        app: mystore-webapp
+#    spec:
+#      containers:
+#      - name: mystore-webapp-pod
+#        image: richardchesterwood/k8s-fleetman-webapp-angular:release1
+        #image: strategies/storefront-webapp:release-1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mystore-catalog-service
+spec:
+  selector:
+    matchLabels:
+      app: mystore-catalog-service
+  replicas: 2
+  template: # template for the pods
+    metadata:
+      labels:
+        app: mystore-catalog-service
+    spec:
+      containers:
+      - name: mystore-catalog-service-pod
+        image: strategies/mystore-catalog-service:latest
+        imagePullPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mystore-inventory-service
+spec:
+  selector:
+    matchLabels:
+      app: mystore-inventory-service
+  replicas: 1
+  template: # template for the pods
+    metadata:
+      labels:
+        app: mystore-inventory-service
+    spec:
+      containers:
+      - name: mystore-inventory-service-pod
+        image: strategies/mystore-inventory-service:latest
+        imagePullPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mystore-catalog-database
+spec:
+  selector:
+    matchLabels:
+      app: mystore-catalog-database
+  replicas: 1
+  template: # MongoDB template for the pods
+    metadata:
+      labels:
+        app: mystore-catalog-database
+    spec:
+      containers:
+      - name: mystore-catalog-database-pod
+        image: mongo:latest
+        #env:
+        #- name: SPRING_PROFILES_ACTIVE
+        #  value: production-microservice
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mystore-inventory-database
+spec:
+  selector:
+    matchLabels:
+      app: mystore-inventory-database
+  replicas: 1
+  template: # MongoDB template for the pods
+    metadata:
+      labels:
+        app: mystore-inventory-database
+    spec:
+      containers:
+      - name: mystore-inventory-database-pod
+        image: mongo:latest
+        #env:
+        #- name: SPRING_PROFILES_ACTIVE
+        #  value: production-microservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mystore-message-service
+spec:
+  selector:
+    matchLabels:
+      app: mystore-message-service
+  replicas: 1
+  template: # template for the pods
+    metadata:
+      labels:
+        app: mystore-message-service
+    spec:
+      containers:
+      - name: mystore-message-service-pod
+        image: strategies/activemq5-14-3
+        #image: richardchesterwood/k8s-fleetman-queue:release1

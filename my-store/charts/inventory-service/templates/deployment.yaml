@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service
+spec:
+  selector:
+    matchLabels:
+      app: inventory-service
+  replicas: 2
+  template: # template for the pods
+    metadata:
+      labels:
+        app: inventory-service
+    spec:
+      containers:
+      - name: inventory-service-pod
+        image: strategies/mystore-catalog-service:latest
+        imagePullPolicy: Always

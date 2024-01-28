@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: inventory-database
+
+spec:
+  # This defines which pods are going to be represented by this Service
+  # The service becomes a network endpoint for either other services
+  # or maybe external users to connect to (eg browser)
+  selector:
+    app: inventory-database
+
+  ports:
+  - port: 27017
+    nodePort: 30030
+
+  type: NodePort

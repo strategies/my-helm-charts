@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-database
+spec:
+  selector:
+    matchLabels:
+      app: catalog-database
+  replicas: 1
+  template: # MongoDB template for the pods
+    metadata:
+      labels:
+        app: catalog-database
+    spec:
+      containers:
+      - name: catalog-database-pod
+        image: mongo:latest
+        #env:
+        #- name: SPRING_PROFILES_ACTIVE
+        #  value: production-microservice

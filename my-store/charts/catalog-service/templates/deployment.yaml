@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-service
+spec:
+  selector:
+    matchLabels:
+      app: catalog-service
+  replicas: 2
+  template: # template for the pods
+    metadata:
+      labels:
+        app: catalog-service
+    spec:
+      containers:
+      - name: catalog-service-pod
+        image: strategies/mystore-catalog-service:latest
+        imagePullPolicy: Always
